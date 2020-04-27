@@ -58,6 +58,7 @@ class UserCtl {
     }
     clientExist(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            //agregamos un comentario xd olv 
             let query = `
         select tipo_cliente
         from usuario

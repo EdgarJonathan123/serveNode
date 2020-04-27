@@ -13,6 +13,7 @@ class EncuestaRoutes {
         // this.router.post('/agregarPregunta',encuestaCtl.agregarPregunta);
         // this.router.put('/:id',encuestaCtl.update);
         // this.router.delete('/:id',encuestaCtl.delete);
+        //otro comentario
     }
 }
 const encuestaRoutes = new EncuestaRoutes();

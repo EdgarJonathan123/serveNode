@@ -53,7 +53,7 @@ class UserCtl {
 
     async clientExist(req: Request, res: Response) {
 
-
+        //agregamos un comentario xd olv 
         let query = `
         select tipo_cliente
         from usuario
