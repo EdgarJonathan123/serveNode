@@ -11,6 +11,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const database = require('../database');
 class UserCtl {
+    getUsers(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let query = `select     idusuario,nombre,apellido,
+                                    contrasenia,correo,telefono,
+                                    foto,genero,fecha_nacimiento,
+                                    fecha_registro,direccion
+                         from usuario
+                         where tipo_cliente = 3`;
+                const response = yield database.simpleExecute(query);
+                res.json(response.rows);
+                console.log(response);
+            }
+            catch (err) {
+                console.error(err);
+            }
+        });
+    }
     createClient(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             let query = `
@@ -47,9 +65,9 @@ class UserCtl {
             try {
                 yield database.simpleExecute(query, binds);
                 res.json({ message: 'yes' });
-                query = `select * from usuario`;
-                const encuestas = yield database.simpleExecute(query);
-                console.log(encuestas);
+                // query = `select * from usuario`;
+                // const encuestas = await database.simpleExecute(query);
+                // console.log(encuestas);
             }
             catch (err) {
                 console.error(err);

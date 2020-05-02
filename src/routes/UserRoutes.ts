@@ -13,6 +13,7 @@ class UserRoutes{
     config(): void {
         this.router.post('/createClient', userCtl.createClient);
         this.router.post('/existClient',userCtl.clientExist);
+        this.router.get('/getUsers',userCtl.getUsers);
         // this.router.post('/nuevaEncuesta',encuestaCtl.create);
         // this.router.post('/agregarPregunta',encuestaCtl.agregarPregunta);
         // this.router.put('/:id',encuestaCtl.update);

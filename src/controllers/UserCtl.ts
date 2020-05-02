@@ -3,6 +3,26 @@ const database = require('../database');
 
 class UserCtl {
 
+
+    async getUsers(req: Request, res: Response) {
+
+        try {
+            let query = `select     idusuario,nombre,apellido,
+                                    contrasenia,correo,telefono,
+                                    foto,genero,fecha_nacimiento,
+                                    fecha_registro,direccion
+                         from usuario
+                         where tipo_cliente = 3`;
+            const response = await database.simpleExecute(query);
+            res.json(response.rows);
+            console.log(response);
+
+        } catch (err) {
+            console.error(err);
+        }
+
+    }
+
     async createClient(req: Request, res: Response) {
 
         let query = `
@@ -42,9 +62,9 @@ class UserCtl {
         try {
             await database.simpleExecute(query, binds);
             res.json({ message: 'yes' });
-            query = `select * from usuario`;
-            const encuestas = await database.simpleExecute(query);
-            console.log(encuestas);
+            // query = `select * from usuario`;
+            // const encuestas = await database.simpleExecute(query);
+            // console.log(encuestas);
 
         } catch (err) {
             console.error(err);
