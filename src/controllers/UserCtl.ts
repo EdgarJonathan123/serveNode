@@ -4,6 +4,31 @@ const database = require('../database');
 class UserCtl {
 
 
+    async getUserById(req: Request, res: Response) {
+        try {
+            let query = `select     idusuario,nombre,apellido,
+                                    contrasenia,correo,telefono,
+                                    foto,genero,fecha_nacimiento,
+                                    fecha_registro,direccion
+                         from usuario
+                         where idusuario = :id`;
+
+
+
+            const binds = {
+                id: req.params.id
+            };
+
+            const response = await database.simpleExecute(query,binds);
+            res.json(response.rows);
+            console.log(response);
+
+        } catch (err) {
+            console.error(err);
+        }
+
+    }
+
     async getUsers(req: Request, res: Response) {
 
         try {

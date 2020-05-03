@@ -11,6 +11,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const database = require('../database');
 class UserCtl {
+    getUserById(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let query = `select     idusuario,nombre,apellido,
+                                    contrasenia,correo,telefono,
+                                    foto,genero,fecha_nacimiento,
+                                    fecha_registro,direccion
+                         from usuario
+                         where idusuario = :id`;
+                const binds = {
+                    id: req.params.id
+                };
+                const response = yield database.simpleExecute(query, binds);
+                res.json(response.rows);
+                console.log(response);
+            }
+            catch (err) {
+                console.error(err);
+            }
+        });
+    }
     getUsers(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
