@@ -3,6 +3,59 @@ const database = require('../database');
 
 class UserCtl {
 
+    async updateUser(req: Request, res: Response) {
+
+        let query = `
+            update usuario  
+            set 
+                nombre              = :nombre,
+                apellido            = :apellido,
+                contrasenia         = :contrasenia,
+                correo              = :correo,
+                telefono            = :telefono,
+                genero              = :genero,
+                foto                = :foto,
+                direccion           = :direccion
+            where idusuario = :id`;
+
+
+
+            // genero              = :genero,
+            // fecha_nacimiento    = :fecha_nacimiento,
+
+        const binds = {
+            id: req.body.IDUSUARIO,
+            nombre: req.body.NOMBRE,
+            apellido: req.body.APELLIDO,
+            contrasenia: req.body.CONTRASENIA,
+            correo: req.body.CORREO,
+            telefono: req.body.TELEFONO,
+            foto: req.body.FOTO,    
+            genero: req.body.GENERO,
+            // fecha_nacimiento: req.body.FECHA_NACIMIENTO,
+            direccion: req.body.DIRECCION
+            // tipo_cliente: 3,
+            // credito: 0,
+            // ganancia: 0
+        };
+
+        // console.log('Consulta: ',query);
+        // console.log('Variables: ',binds);
+        // console.log('id: ',req.body.IDUSUARIO);
+
+        try {
+            await database.simpleExecute(query, binds);
+            res.json({message: "yes"});
+            // console.log('yes');
+
+            // query = `select * from usuario`;
+            // const usuarios = await database.simpleExecute(query);
+            // console.log(usuarios);
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     async getUserById(req: Request, res: Response) {
         try {
@@ -19,7 +72,7 @@ class UserCtl {
                 id: req.params.id
             };
 
-            const response = await database.simpleExecute(query,binds);
+            const response = await database.simpleExecute(query, binds);
             res.json(response.rows);
             console.log(response);
 
