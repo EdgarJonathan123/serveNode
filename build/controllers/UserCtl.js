@@ -22,19 +22,18 @@ class UserCtl {
                 correo              = :correo,
                 telefono            = :telefono,
                 genero              = :genero,
-                foto                = :foto,
                 direccion           = :direccion
-            where idusuario = :id`;
+            where id = :id`;
             // genero              = :genero,
             // fecha_nacimiento    = :fecha_nacimiento,
             const binds = {
-                id: req.body.IDUSUARIO,
+                id: req.body.ID,
                 nombre: req.body.NOMBRE,
                 apellido: req.body.APELLIDO,
                 contrasenia: req.body.CONTRASENIA,
                 correo: req.body.CORREO,
                 telefono: req.body.TELEFONO,
-                foto: req.body.FOTO,
+                // fotografia: req.body.FOTOGRAFIA,    
                 genero: req.body.GENERO,
                 // fecha_nacimiento: req.body.FECHA_NACIMIENTO,
                 direccion: req.body.DIRECCION
@@ -61,12 +60,12 @@ class UserCtl {
     getUserById(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let query = `select     idusuario,nombre,apellido,
+                let query = `select     id,nombre,apellido,
                                     contrasenia,correo,telefono,
-                                    foto,genero,fecha_nacimiento,
+                                    fotografia,genero,fecha_nacimiento,
                                     fecha_registro,direccion
                          from usuario
-                         where idusuario = :id`;
+                         where id = :id`;
                 const binds = {
                     id: req.params.id
                 };
@@ -82,12 +81,12 @@ class UserCtl {
     getUsers(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let query = `select     idusuario,nombre,apellido,
+                let query = `select     id,nombre,apellido,
                                     contrasenia,correo,telefono,
-                                    foto,genero,fecha_nacimiento,
+                                    fotografia,genero,fecha_nacimiento,
                                     fecha_registro,direccion
                          from usuario
-                         where tipo_cliente = 3`;
+                         where rol = 3`;
                 const response = yield database.simpleExecute(query);
                 res.json(response.rows);
                 console.log(response);
@@ -146,8 +145,8 @@ class UserCtl {
         return __awaiter(this, void 0, void 0, function* () {
             //agregamos un comentario xd olv 
             let query = `
-        select tipo_cliente
-        from usuario
+        select rol
+        from proyecto2.usuario
         where correo = :correo and contrasenia = :contrasenia`;
             const binds = {
                 contrasenia: req.body.contrasenia,
@@ -157,10 +156,10 @@ class UserCtl {
             try {
                 const response = yield database.simpleExecute(query, binds);
                 if (response.rows.length === 1) {
+                    console.log(response.rows[0]);
                     res.status(200).json(response.rows[0]);
                 }
                 else {
-                    console.log('Que paso amiguito xd');
                     res.status(404).end();
                 }
             }

@@ -4,6 +4,7 @@ import cors from 'cors';
 
 import encuestaRoutes from './routes/encuestasRoutes'
 import userRoutes from './routes/UserRoutes';
+import fsRoutes from './routes/fsRoutes';
 
 const database = require('./database');
 
@@ -19,7 +20,7 @@ class Server {
 
     config(): void {
         this.app.set('port', process.env.PORT || 3000);
-        this.app.set('trust proxy', 'loopback,192.168.1.11');
+        this.app.set('trust proxy', 'loopback,192.168.1.13');
 
         this.app.use(morgan('dev'));
         this.app.use(cors());
@@ -29,6 +30,10 @@ class Server {
 
     routes(): void {
         this.app.use('/user', userRoutes);
+        this.app.use('/fs',fsRoutes); // /fs/prueba
+
+        
+
         // this.app.use('/home',encuesta Routes);
         // this.app.use('/paises',paisRoutes);
         // this.app.use('/profs/',profsRoutes);

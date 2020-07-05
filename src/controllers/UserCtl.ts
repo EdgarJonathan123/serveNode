@@ -14,9 +14,8 @@ class UserCtl {
                 correo              = :correo,
                 telefono            = :telefono,
                 genero              = :genero,
-                foto                = :foto,
                 direccion           = :direccion
-            where idusuario = :id`;
+            where id = :id`;
 
 
 
@@ -24,13 +23,13 @@ class UserCtl {
             // fecha_nacimiento    = :fecha_nacimiento,
 
         const binds = {
-            id: req.body.IDUSUARIO,
+            id: req.body.ID,
             nombre: req.body.NOMBRE,
             apellido: req.body.APELLIDO,
             contrasenia: req.body.CONTRASENIA,
             correo: req.body.CORREO,
             telefono: req.body.TELEFONO,
-            foto: req.body.FOTO,    
+            // fotografia: req.body.FOTOGRAFIA,    
             genero: req.body.GENERO,
             // fecha_nacimiento: req.body.FECHA_NACIMIENTO,
             direccion: req.body.DIRECCION
@@ -59,12 +58,12 @@ class UserCtl {
 
     async getUserById(req: Request, res: Response) {
         try {
-            let query = `select     idusuario,nombre,apellido,
+            let query = `select     id,nombre,apellido,
                                     contrasenia,correo,telefono,
-                                    foto,genero,fecha_nacimiento,
+                                    fotografia,genero,fecha_nacimiento,
                                     fecha_registro,direccion
                          from usuario
-                         where idusuario = :id`;
+                         where id = :id`;
 
 
 
@@ -85,12 +84,12 @@ class UserCtl {
     async getUsers(req: Request, res: Response) {
 
         try {
-            let query = `select     idusuario,nombre,apellido,
+            let query = `select     id,nombre,apellido,
                                     contrasenia,correo,telefono,
-                                    foto,genero,fecha_nacimiento,
+                                    fotografia,genero,fecha_nacimiento,
                                     fecha_registro,direccion
                          from usuario
-                         where tipo_cliente = 3`;
+                         where rol = 3`;
             const response = await database.simpleExecute(query);
             res.json(response.rows);
             console.log(response);
@@ -153,25 +152,22 @@ class UserCtl {
 
         //agregamos un comentario xd olv 
         let query = `
-        select tipo_cliente
-        from usuario
+        select rol
+        from proyecto2.usuario
         where correo = :correo and contrasenia = :contrasenia`;
 
         const binds = {
             contrasenia: req.body.contrasenia,
             correo: req.body.correo
         };
-
         console.log(binds);
 
         try {
-
             const response = await database.simpleExecute(query, binds);
-
             if (response.rows.length === 1) {
+                console.log(response.rows[0]);
                 res.status(200).json(response.rows[0]);
             } else {
-                console.log('Que paso amiguito xd');
                 res.status(404).end();
             }
 

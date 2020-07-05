@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 const UserRoutes_1 = __importDefault(require("./routes/UserRoutes"));
+const fsRoutes_1 = __importDefault(require("./routes/fsRoutes"));
 const database = require('./database');
 class Server {
     constructor() {
@@ -16,7 +17,7 @@ class Server {
     }
     config() {
         this.app.set('port', process.env.PORT || 3000);
-        this.app.set('trust proxy', 'loopback,192.168.1.11');
+        this.app.set('trust proxy', 'loopback,192.168.1.13');
         this.app.use(morgan_1.default('dev'));
         this.app.use(cors_1.default());
         this.app.use(express_1.default.json());
@@ -24,6 +25,7 @@ class Server {
     }
     routes() {
         this.app.use('/user', UserRoutes_1.default);
+        this.app.use('/fs', fsRoutes_1.default); // /fs/prueba
         // this.app.use('/home',encuesta Routes);
         // this.app.use('/paises',paisRoutes);
         // this.app.use('/profs/',profsRoutes);
