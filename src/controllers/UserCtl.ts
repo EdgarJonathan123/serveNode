@@ -3,6 +3,27 @@ const database = require('../database');
 
 class UserCtl {
 
+    async deleteUser(req:Request,res:Response){
+
+        let query = `delete from usuario where id = :id`;
+
+        const binds = {
+            id: req.params.id
+        };
+
+        console.log(binds);
+
+        try {
+
+            await database.simpleExecute(query, binds);
+            res.json({message: "Usuario Eliminado"});
+
+        } catch (error) {
+            console.error(error);
+        }
+        
+    }
+
     async updateUser(req: Request, res: Response) {
 
         let query = `
@@ -28,10 +49,8 @@ class UserCtl {
             apellido: req.body.APELLIDO,
             contrasenia: req.body.CONTRASENIA,
             correo: req.body.CORREO,
-            telefono: req.body.TELEFONO,
-            // fotografia: req.body.FOTOGRAFIA,    
+            telefono: req.body.TELEFONO,   
             genero: req.body.GENERO,
-            // fecha_nacimiento: req.body.FECHA_NACIMIENTO,
             direccion: req.body.DIRECCION
             // tipo_cliente: 3,
             // credito: 0,
@@ -44,7 +63,7 @@ class UserCtl {
 
         try {
             await database.simpleExecute(query, binds);
-            res.json({message: "yes"});
+            res.json({message: "Usuario Modificado con exito!"});
             // console.log('yes');
 
             // query = `select * from usuario`;
@@ -65,15 +84,13 @@ class UserCtl {
                          from usuario
                          where id = :id`;
 
-
-
             const binds = {
                 id: req.params.id
             };
 
             const response = await database.simpleExecute(query, binds);
             res.json(response.rows);
-            console.log(response);
+            // console.log(response);
 
         } catch (err) {
             console.error(err);

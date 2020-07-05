@@ -16,6 +16,9 @@ class UserRoutes{
         this.router.get('/getUsers',userCtl.getUsers);
         this.router.get('/getUsers/:id',userCtl.getUserById);
         this.router.put('/updateUser',userCtl.updateUser);
+        this.router.delete('/delete/:id',userCtl.deleteUser);
+
+        
         // this.router.post('/nuevaEncuesta',encuestaCtl.create);
         // this.router.post('/agregarPregunta',encuestaCtl.agregarPregunta);
         // this.router.put('/:id',encuestaCtl.update);

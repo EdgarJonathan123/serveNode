@@ -11,6 +11,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const database = require('../database');
 class UserCtl {
+    deleteUser(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let query = `delete from usuario where id = :id`;
+            const binds = {
+                id: req.params.id
+            };
+            console.log(binds);
+            try {
+                yield database.simpleExecute(query, binds);
+                res.json({ message: "Usuario Eliminado" });
+            }
+            catch (error) {
+                console.error(error);
+            }
+        });
+    }
     updateUser(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             let query = `
@@ -33,9 +49,7 @@ class UserCtl {
                 contrasenia: req.body.CONTRASENIA,
                 correo: req.body.CORREO,
                 telefono: req.body.TELEFONO,
-                // fotografia: req.body.FOTOGRAFIA,    
                 genero: req.body.GENERO,
-                // fecha_nacimiento: req.body.FECHA_NACIMIENTO,
                 direccion: req.body.DIRECCION
                 // tipo_cliente: 3,
                 // credito: 0,
@@ -46,7 +60,7 @@ class UserCtl {
             // console.log('id: ',req.body.IDUSUARIO);
             try {
                 yield database.simpleExecute(query, binds);
-                res.json({ message: "yes" });
+                res.json({ message: "Usuario Modificado con exito!" });
                 // console.log('yes');
                 // query = `select * from usuario`;
                 // const usuarios = await database.simpleExecute(query);
@@ -71,7 +85,7 @@ class UserCtl {
                 };
                 const response = yield database.simpleExecute(query, binds);
                 res.json(response.rows);
-                console.log(response);
+                // console.log(response);
             }
             catch (err) {
                 console.error(err);
